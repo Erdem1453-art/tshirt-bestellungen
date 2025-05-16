@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Abschluss T-Shirt Bestellung</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+    <h1>🎓 Abschluss-T-Shirt 2025 🎉</h1>
+    <p class="subtitle">Wähle dein Lieblingsdesign und sichere dir dein Shirt!<br></p>
+
+    <form id="orderForm">
+      <label for="name">👤 Dein Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="class">🏫 Deine Klasse:</label>
+      <input type="text" id="class" name="class" required />
+
+      <label>🎨 Design auswählen:</label>
+      <div class="design-grid">
+        <label><input type="radio" name="design" value="Design 1" required><span>Design 1</span></label>
+        <label><input type="radio" name="design" value="Design 2"><span>Design 2</span></label>
+        <label><input type="radio" name="design" value="Design 3"><span>Design 3</span></label>
+        <label><input type="radio" name="design" value="Design 4"><span>Design 4</span></label>
+        <label><input type="radio" name="design" value="Design 5"><span>Design 5</span></label>
+        <label><input type="radio" name="design" value="Design 6"><span>Design 6</span></label>
+      </div>
+
+      <label for="size">📏 Größe:</label>
+<select id="size" name="size" required>
+  <option value="">-- Bitte auswählen --</option> 
+  <option value="XS">XS</option>
+  <option value="S">S</option>
+  <option value="M">M</option>
+  <option value="L">L</option>
+  <option value="XL">XL</option>
+  <option value="XXL">XXL</option>
+  <option value="XXXL">XXXL</option>
+</select>
+
+
+      <label for="message">💬 Nachricht (optional):</label>
+      <textarea id="message" name="message" rows="3" placeholder="Sonderwünsche, Fragen ..."></textarea>
+
+      <button type="submit">🎯 Bestellung absenden</button>
+    </form>
+    <footer>
+      <p>© 2025 Erdem Abdurrahman Gencan – Alle Rechte vorbehalten.</p>
+      <p>📧 Bei Fragen oder Fehlern: 
+        <a href="erdemgencan06@gmail.com" style="color: #2fe3e0;">erdemgencan06@gmail.com<a>
+      </p>
+      <p>🧑‍🏫 Gerne stehe ich für euch auch persönlich in der Klasse 4C im 2.Stock zur Verfügung.</p>
+    </footer>
+    
+    
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
