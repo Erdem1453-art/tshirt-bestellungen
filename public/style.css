@@ -5,6 +5,7 @@ body {
   padding: 0;
   background-color: #111; /* Schwarz */
   color: #f0f0f0;         /* Hellgrauer Text */
+  text-align: center;
 }
 
 .wrapper {
@@ -19,6 +20,7 @@ body {
 h1 {
   color: #a259ff; /* Lila */
   text-align: center;
+  margin-bottom: 30px;
 }
 
 .subtitle {
@@ -50,9 +52,47 @@ input[type="radio"] {
 
 .design-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-top: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 2rem auto;
+}
+
+.design-box {
+  background-color: #1a1a1a;
+  border: 2px solid #333;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(162, 89, 255, 0.1);
+}
+
+.design-box {
+  background-color: #1a1a1a;
+  border: 2px solid #333;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(162, 89, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.design-box:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 20px rgba(162, 89, 255, 0.3);
+  border-color: #a259ff;
+}
+
+
+.design-image {
+  width: 100%;
+  height: 250px;
+  background-color: #333;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ccc;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .design-grid label {
@@ -95,3 +135,4 @@ footer {
   color: #666;
   font-size: 0.9rem;
 }
+

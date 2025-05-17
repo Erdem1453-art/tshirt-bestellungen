@@ -6,6 +6,41 @@
   <title>Abschluss T-Shirt Bestellung</title>
   <link rel="stylesheet" href="style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    #easter-egg {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-size: 28px;
+      opacity: 0.3;
+      cursor: pointer;
+      user-select: none;
+      z-index: 9999;
+      transition: opacity 0.3s ease;
+      width: 40px;
+      height: 40px;
+      background-color: #ffeb3b;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: black;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    #easter-egg:hover {
+      opacity: 1;
+    }
+
+    #secret-message {
+      display: none;
+      text-align: center;
+      margin-top: 15px;
+      color: #2fe3e0;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
   <div class="wrapper">
@@ -30,33 +65,123 @@
       </div>
 
       <label for="size">📏 Größe:</label>
-<select id="size" name="size" required>
-  <option value="">-- Bitte auswählen --</option> 
-  <option value="XS">XS</option>
-  <option value="S">S</option>
-  <option value="M">M</option>
-  <option value="L">L</option>
-  <option value="XL">XL</option>
-  <option value="XXL">XXL</option>
-  <option value="XXXL">XXXL</option>
-</select>
-
+      <select id="size" name="size" required>
+        <option value="">-- Bitte auswählen --</option> 
+        <option value="XS">XS</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+        <option value="XXL">XXL</option>
+        <option value="XXXL">XXXL</option>
+      </select>
 
       <label for="message">💬 Nachricht (optional):</label>
       <textarea id="message" name="message" rows="3" placeholder="Sonderwünsche, Fragen ..."></textarea>
 
       <button type="submit">🎯 Bestellung absenden</button>
     </form>
+
+    <h2>T-Shirt Design Vorschau</h2>
+    <div class="design-grid">
+      <div class="design-box"><div class="design-image">Design 1</div></div>
+      <div class="design-box"><div class="design-image">Design 2</div></div>
+      <div class="design-box"><div class="design-image">Design 3</div></div>
+      <div class="design-box"><div class="design-image">Design 4</div></div>
+      <div class="design-box"><div class="design-image">Design 5</div></div>
+      <div class="design-box"><div class="design-image">Design 6</div></div>
+    </div>
+
+    <div id="secret-message">
+      🎉 Glückwunsch! Du hast 20 % Rabatt gefunden!  Dein Rabatt ist automatisch aktiviert! Bitte verrate es niemanden :) 🎉
+    </div>
+
     <footer>
       <p>© 2025 Erdem Abdurrahman Gencan – Alle Rechte vorbehalten.</p>
       <p>📧 Bei Fragen oder Fehlern: 
-        <a href="erdemgencan06@gmail.com" style="color: #2fe3e0;">erdemgencan06@gmail.com<a>
+        <a href="mailto:erdemgencan06@gmail.com" style="color: #2fe3e0;">erdemgencan06@gmail.com</a>
       </p>
       <p>🧑‍🏫 Gerne stehe ich für euch auch persönlich in der Klasse 4C im 2.Stock zur Verfügung.</p>
     </footer>
-    
-    
   </div>
-  <script src="script.js"></script>
+
+  <!-- 🥚 Das versteckte Easteregg -->
+  <div id="easter-egg" title="Pssst..." aria-label="Geheimer Rabatt" role="button" tabindex="0">🥚</div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let easterEggClicked = false;
+
+      const egg = document.getElementById("easter-egg");
+      const message = document.getElementById("secret-message");
+      const form = document.getElementById("orderForm");
+
+      egg.addEventListener("mouseenter", () => {
+        egg.style.opacity = "1";
+      });
+
+      egg.addEventListener("mouseleave", () => {
+        if (!easterEggClicked) egg.style.opacity = "0.3";
+      });
+
+      egg.addEventListener("click", () => {
+        if (!easterEggClicked) {
+          easterEggClicked = true;
+          message.style.display = "block";
+          egg.style.pointerEvents = "none"; // einmalig aktivieren
+          egg.style.opacity = "0.6";
+          alert("Easteregg aktiviert! 🐣");
+        }
+      });
+
+      egg.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          egg.click();
+        }
+      });
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        const orderData = {
+          name: formData.get("name"),
+          class: formData.get("class"),
+          design: formData.get("design"),
+          size: formData.get("size"),
+          message: formData.get("message"),
+          easterEggClicked: easterEggClicked,
+        };
+
+        if (!orderData.name || !orderData.class || !orderData.design || !orderData.size) {
+          alert("Bitte fülle alle Pflichtfelder aus!");
+          return;
+        }
+
+        fetch("/bestellen", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(orderData),
+        })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            alert("Bestellung erfolgreich gesendet!");
+            form.reset();
+          } else {
+            alert("Fehler: " + data.message);
+          }
+        })
+        .catch((err) => {
+          console.error("Fehler beim Senden:", err);
+          alert("Es gab einen Fehler beim Senden der Bestellung.");
+        });
+      });
+    });
+  </script>
 </body>
 </html>

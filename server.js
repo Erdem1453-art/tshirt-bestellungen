@@ -22,7 +22,7 @@ const transporter = nodemailer.createTransport({
 
 // Bestellroute
 app.post("/bestellen", (req, res) => {
-  const { name, class: klasse, design, size, message } = req.body;
+  const { name, class: klasse, design, size, message, easterEggClicked } = req.body;
 
   // Pflichtfeld-Validierung
   if (!name || !klasse || !design || !size) {
@@ -31,10 +31,10 @@ app.post("/bestellen", (req, res) => {
     return res.status(400).json({ success: false, message: errorText });
   }
 
-  // Mail zusammenstellen
+  // Mail zusammenstellen mit Easteregg Info
   const mailOptions = {
-    from: "erdemgencan06@gmail.com",         // <--- ebenfalls anpassen!
-    to: "erdemgencan06@gmail.com",       // <--- wohin die Bestellungen gehen sollen
+    from: "erdemgencan06@gmail.com",       // <--- ebenfalls anpassen!
+    to: "erdemgencan06@gmail.com",         // <--- wohin die Bestellungen gehen sollen
     subject: "📦 Neue T-Shirt Bestellung",
     text: `
 Neue Bestellung erhalten:
@@ -44,6 +44,8 @@ Neue Bestellung erhalten:
 🎨 Design: ${design}
 📏 Größe: ${size}
 💬 Nachricht: ${message || "(keine)"}
+
+🥚 Easteregg angeklickt? ${easterEggClicked ? "Ja 🐣" : "Nein"}
     `
   };
 
@@ -55,7 +57,7 @@ Neue Bestellung erhalten:
     }
 
     console.log("✅ Bestellung erfolgreich per E-Mail gesendet! :", info.response);
-    res.status(200).json({ success: true, message: "Bestellung erfolgreich gesendet.Deine Bestellung wird schnellstmöglich bearbeitet!!" });
+    res.status(200).json({ success: true, message: "✅Bestellung erfolgreich gesendet. Deine Bestellugn wird so schnell als möglich bearbeitet" });
   });
 });
 

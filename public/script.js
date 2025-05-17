@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const result = await response.json();
 
       if (response.ok && result.success) {
-        alert("✅ Bestellung erfolgreich abgeschickt!Deine Bestellung wird schnellstmöglich bearbeitet!!");
+        alert("✅ Bestellung erfolgreich abgeschickt! Deine Bestellung wird schnellstmöglich bearbeitet!!");
         form.reset();
       } else {
         alert("❌ Fehler beim Absenden: " + (result.message || "Unbekannter Fehler."));
@@ -48,4 +48,27 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("❌ Netzwerkfehler. Bitte versuche es erneut.");
     }
   });
+
+  // Easteregg Klick Event
+  const easterEgg = document.getElementById("easter-egg");
+  if (easterEgg) {
+    easterEgg.addEventListener("click", async () => {
+      try {
+        const response = await fetch("/easteregg", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ message: "Das Easteregg wurde angeklickt!" })
+        });
+        if (response.ok) {
+          console.log("Easteregg Klick wurde gemeldet.");
+        } else {
+          console.error("Fehler beim Melden des Eastereggs.");
+        }
+      } catch (error) {
+        console.error("Netzwerkfehler beim Melden des Eastereggs:", error);
+      }
+    });
+  }
 });
